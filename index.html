@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+     <title>Une surprise pour toi mon amour... 💌</title>
+     <meta name="description" content="Coucou mon cœur ! Gaëtan t'a préparé une surprise secrète très spéciale... Ouvre la lettre pour découvrir ce qui t'attend. 💖">
+
+     <!-- 🌸 Favicon Fleur -->
+     <link rel="icon" type="image/jpeg" href="img/favicon_flower.jpg">
+     <link rel="apple-touch-icon" href="img/favicon_flower.jpg">
+
+     <!-- 💖 Image & Métadonnées de partage (WhatsApp, iMessage, etc.) -->
+     <meta property="og:type" content="website">
+     <meta property="og:title" content="Une surprise pour toi mon amour... 💌">
+     <meta property="og:description" content="Gaëtan t'a préparé une surprise secrète très spéciale... Ouvre la lettre pour découvrir ce qui t'attend. 💖">
+     <meta property="og:image" content="img/og_preview.jpg">
+     <meta name="twitter:card" content="summary_large_image">
+     <meta name="twitter:title" content="Une surprise pour toi mon amour... 💌">
+     <meta name="twitter:description" content="Gaëtan t'a préparé une surprise secrète très spéciale... Ouvre la lettre pour découvrir ce qui t'attend. 💖">
+     <meta name="twitter:image" content="img/og_preview.jpg">
+     <script src="https://cdn.tailwindcss.com"></script>
+     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+     <!-- SDK EmailJS pour envoi des confirmations -->
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+     <style>
+          body {
+               font-family: 'Plus Jakarta Sans', sans-serif;
+               -webkit-tap-highlight-color: transparent;
+          }
+
+          /* Support des safe areas pour iPhone et Android */
+          .safe-top {
+               padding-top: max(env(safe-area-inset-top, 0px), 1rem);
+          }
+
+          .safe-bottom {
+               padding-bottom: max(env(safe-area-inset-bottom, 0px), 1rem);
+          }
+
+          #chat-messages {
+               -webkit-overflow-scrolling: touch;
+               overscroll-behavior-y: contain;
+          }
+
+          @keyframes floatHeart {
+               0% {
+                    transform: translateY(0px) scale(0.9);
+                    opacity: 0.9;
+               }
+
+               50% {
+                    transform: translateY(-25px) scale(1.15);
+                    opacity: 1;
+               }
+
+               100% {
+                    transform: translateY(-50px) scale(0.85);
+                    opacity: 0;
+               }
+          }
+
+          .floating-heart {
+               position: absolute;
+               animation: floatHeart 2.8s ease-in-out infinite;
+               pointer-events: none;
+          }
+
+          .message-bubble {
+               animation: fadeInMessage 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+               opacity: 0;
+               transform: translateY(8px);
+          }
+
+          @keyframes fadeInMessage {
+               to {
+                    opacity: 1;
+                    transform: translateY(0);
+               }
+          }
+
+          .typing-dot {
+               animation: typingAnimation 1.4s infinite ease-in-out both;
+          }
+
+          .typing-dot:nth-child(2) {
+               animation-delay: 0.2s;
+          }
+
+          .typing-dot:nth-child(3) {
+               animation-delay: 0.4s;
+          }
+
+          @keyframes typingAnimation {
+
+               0%,
+               80%,
+               100% {
+                    transform: scale(0);
+               }
+
+               40% {
+                    transform: scale(1.0);
+               }
+          }
+
+          button {
+               touch-action: manipulation;
+          }
+
+          /* Diaporama d'arrière-plan avec fondu enchaîné doux */
+          .bg-slide {
+               position: absolute;
+               inset: 0;
+               background-size: cover;
+               background-position: center;
+               opacity: 0;
+               transform: scale(1);
+               transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 9s ease-out;
+               will-change: opacity, transform;
+          }
+
+          .bg-slide.active {
+               opacity: 1;
+               transform: scale(1.05);
+          }
+
+          /* Animation de battement pour le sceau de l'enveloppe */
+          @keyframes gentlePulse {
+
+               0%,
+               100% {
+                    transform: scale(1);
+               }
+
+               50% {
+                    transform: scale(1.08);
+               }
+          }
+
+          .pulse-seal {
+               animation: gentlePulse 2s ease-in-out infinite;
+          }
+     </style>
+</head>
+
+<body
+     class="h-full min-h-[100dvh] bg-slate-900 text-slate-800 flex items-center justify-center p-0 sm:p-4 md:p-6 relative overflow-hidden">
+
+     <!-- Diaporama d'arrière-plan avec alternance douce des images (Rigolo en fin de boucle) -->
+     <div id="bg-slideshow" class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+          <div class="bg-slide active" style="background-image: url('img/IMG_0363.jpeg');"></div>
+          <div class="bg-slide" style="background-image: url('img/IMG_0367.jpeg');"></div>
+          <div class="bg-slide" style="background-image: url('img/IMG_3709.jpeg');"></div>
+          <div class="bg-slide" style="background-image: url('img/IMG_3776.jpeg');"></div>
+          <div class="bg-slide" style="background-image: url('img/IMG_4035.jpeg');"></div>
+          <div class="bg-slide" style="background-image: url('img/IMG_6073.jpeg');"></div>
+          <div class="bg-slide" style="background-image: url('img/RIGOLO.jpg');"></div>
+
+          <!-- Voile blanc très léger et sans aucun flou (blur) pour une netteté absolue des photos -->
+          <div class="absolute inset-0 bg-white/10"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-white/10"></div>
+     </div>
+
+     <!-- Conteneur Principal : Totalement net sans effet de flou (sans blur) -->
+     <main
+          class="w-full h-[100dvh] sm:h-[88vh] sm:max-h-[860px] sm:max-w-xl md:max-w-2xl bg-white/20 sm:bg-white/25 sm:rounded-3xl sm:border sm:border-white/60 sm:shadow-2xl flex flex-col relative overflow-hidden z-10">
+
+          <!-- En-tête (Sticky avec safe-area pour les smartphones) -->
+          <header
+               class="bg-white/85 safe-top pb-3.5 px-4 sm:px-6 border-b border-white/50 flex items-center justify-between z-20 shrink-0 shadow-sm">
+               <div class="flex items-center space-x-3">
+                    <div class="relative">
+                         <img src="img/profil.PNG" alt="Gaëtan"
+                              class="w-11 h-11 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-rose-200 shadow-md shadow-rose-200">
+                         <span
+                              class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span>
+                    </div>
+                    <div>
+                         <h1 class="font-bold text-slate-800 text-base sm:text-lg leading-tight">Gaëtan</h1>
+                         <p class="text-xs text-rose-500 font-medium flex items-center gap-1.5">
+                              <span class="inline-block w-1.5 h-1.5 bg-rose-500 rounded-full animate-ping"></span>
+                              En ligne & amoureux
+                         </p>
+                    </div>
+               </div>
+               <div class="flex items-center space-x-2">
+                    <button onclick="restartExperience()"
+                         class="w-10 h-10 rounded-full bg-white/80 hover:bg-white active:scale-95 text-rose-500 flex items-center justify-center transition shadow-sm border border-rose-100"
+                         title="Recommencer" aria-label="Recommencer l'invitation">
+                         <i class="fa-solid fa-rotate-right text-sm"></i>
+                    </button>
+                    <button onclick="handleQuit()"
+                         class="w-10 h-10 rounded-full bg-white/80 hover:bg-rose-50 active:scale-95 text-slate-500 hover:text-rose-600 flex items-center justify-center transition shadow-sm border border-rose-100"
+                         title="Quitter" aria-label="Quitter l'application">
+                         <i class="fa-solid fa-arrow-right-from-bracket text-sm"></i>
+                    </button>
+               </div>
+          </header>
+
+          <!-- Zone de discussion (Scrollable avec momentum iOS/Android) -->
+          <section id="chat-messages" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4 bg-transparent relative"
+               aria-live="polite">
+               <!-- Filigrane cœur doux en arrière-plan -->
+               <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04]">
+                    <i class="fa-solid fa-heart text-9xl text-white"></i>
+               </div>
+               <!-- Les messages sont injectés dynamiquement ici -->
+          </section>
+
+          <!-- Indicateur de saisie "en train d'écrire..." -->
+          <div id="typing-indicator" class="px-4 sm:px-6 py-2 shrink-0 hidden">
+               <div
+                    class="flex items-center space-x-1.5 bg-white/90 border border-rose-100 w-16 px-3 py-2 rounded-2xl rounded-bl-sm shadow-md">
+                    <div class="w-2 h-2 bg-rose-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-rose-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-rose-400 rounded-full typing-dot"></div>
+               </div>
+          </div>
+
+          <!-- Zone d'actions interactives (ancrée en bas, avec padding ergonomique mobile) -->
+          <footer id="action-container"
+               class="p-4 sm:p-5 safe-bottom bg-white/85 border-t border-white/50 z-20 shrink-0 transition-all duration-300">
+               <!-- Les boutons d'options apparaissent ici -->
+          </footer>
+     </main>
+
+     <!-- Conteneur d'animation cœurs / confettis -->
+     <div id="particles-container" class="fixed inset-0 pointer-events-none overflow-hidden z-50"></div>
+
+     <!-- 💌 Écran d'accueil : Enveloppe romantique cachetée (Ouverture magique) -->
+     <div id="envelope-overlay"
+          class="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-all duration-700">
+          <div class="text-center flex flex-col items-center">
+               <div class="relative cursor-pointer group transition transform hover:scale-105 active:scale-95 duration-300"
+                    onclick="openEnvelope()">
+                    <!-- Carte enveloppe stylisée avec sceau de cire -->
+                    <div
+                         class="w-72 h-48 sm:w-80 sm:h-52 mx-auto bg-gradient-to-br from-rose-100 via-pink-100 to-rose-200 rounded-3xl shadow-2xl p-4 border-2 border-white/80 flex flex-col items-center justify-center relative overflow-hidden">
+                         <!-- Rabattement de l'enveloppe -->
+                         <div
+                              class="absolute -top-12 left-0 right-0 h-28 bg-rose-200/60 rounded-b-full border-b border-rose-300/40">
+                         </div>
+
+                         <!-- Cachet de cire romantique -->
+                         <div
+                              class="w-16 h-16 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-rose-500/40 border-2 border-rose-200 z-10 pulse-seal">
+                              💌
+                         </div>
+
+                         <p class="text-xs font-bold text-rose-700 tracking-widest uppercase mt-3 z-10">Pour mon amour
+                         </p>
+                         <p class="text-[11px] text-slate-600 font-medium z-10">De la part de Gaëtan</p>
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <!-- Modal Taquin Quitter / Déconnexion -->
+     <div id="quit-modal"
+          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+          <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border border-rose-100 transform scale-95 transition-transform duration-300"
+               id="quit-modal-content">
+               <div
+                    class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
+                    🙈
+               </div>
+               <h3 class="text-lg font-bold text-slate-800 mb-2">Où penses-tu aller comme ça ? 🥺</h3>
+               <p class="text-sm text-slate-600 mb-6 leading-relaxed">
+                    Tu ne peux pas quitter ton chéri si facilement ! Ton cœur a déjà choisi... Reviens ici tout de suite
+                    ! 🥰💖
+               </p>
+               <button onclick="closeQuitModal()"
+                    class="w-full py-3.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-lg shadow-rose-300 transition text-sm sm:text-base flex items-center justify-center space-x-2">
+                    <span>Retourner auprès de Gaëtan</span>
+                    <span>🥰</span>
+               </button>
+          </div>
+     </div>
+
+     <!-- Modal Pop-up Confirmation + Agenda + Compte à rebours + WhatsApp -->
+     <div id="calendar-modal"
+          class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+          <div class="bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-6 max-w-sm w-full text-center shadow-2xl border border-rose-100 transform scale-95 transition-transform duration-300 max-h-[92vh] overflow-y-auto"
+               id="calendar-modal-content">
+               <div
+                    class="w-14 h-14 bg-gradient-to-tr from-rose-100 to-pink-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-inner">
+                    🎉
+               </div>
+               <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-1">C'est officiel mon cœur ! 💖</h3>
+               <div
+                    class="inline-block bg-rose-50 text-rose-600 text-xs font-bold px-3 py-1 rounded-full mb-3 border border-rose-200">
+                    Dimanche 18 & Lundi 19 Octobre
+               </div>
+
+               <!-- ⏳ Compte à rebours amoureux -->
+               <div class="mb-4">
+                    <p
+                         class="text-[11px] font-semibold text-rose-500 uppercase tracking-wider mb-1.5 flex items-center justify-center gap-1">
+                         <i class="fa-solid fa-clock"></i>
+                         <span>Départ dans :</span>
+                    </p>
+                    <div
+                         class="grid grid-cols-4 gap-2 bg-rose-50/70 p-2.5 rounded-2xl border border-rose-100 text-center">
+                         <div class="bg-white/80 rounded-xl py-1">
+                              <div id="countdown-days" class="text-base font-bold text-rose-600 leading-tight">--</div>
+                              <div class="text-[9px] text-slate-500 uppercase tracking-wider font-medium">Jours</div>
+                         </div>
+                         <div class="bg-white/80 rounded-xl py-1">
+                              <div id="countdown-hours" class="text-base font-bold text-rose-600 leading-tight">--</div>
+                              <div class="text-[9px] text-slate-500 uppercase tracking-wider font-medium">Heures</div>
+                         </div>
+                         <div class="bg-white/80 rounded-xl py-1">
+                              <div id="countdown-mins" class="text-base font-bold text-rose-600 leading-tight">--</div>
+                              <div class="text-[9px] text-slate-500 uppercase tracking-wider font-medium">Mins</div>
+                         </div>
+                         <div class="bg-white/80 rounded-xl py-1">
+                              <div id="countdown-secs" class="text-base font-bold text-rose-600 leading-tight">--</div>
+                              <div class="text-[9px] text-slate-500 uppercase tracking-wider font-medium">Secs</div>
+                         </div>
+                    </div>
+               </div>
+
+               <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
+                    Prépare ton plus beau sourire, je m'occupe de tout le reste !
+               </p>
+
+               <div class="space-y-3 mb-4">
+                    <!-- 💬 Option WhatsApp vers Gaëtan -->
+                    <a href="https://wa.me/33749297869?text=Mon%20ch%C3%A9ri%2C%20j'ai%20dit%20OUI%20!%20%F0%9F%92%96%20J'ai%20trop%20h%C3%A2te%20qu'on%20parte%20ce%20week-end%20du%2018%20octobre%20!%20%F0%9F%A5%B0%E2%9C%88%EF%B8%8F"
+                         target="_blank" rel="noopener noreferrer"
+                         class="w-full py-3.5 px-4 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-md shadow-emerald-200 transition text-sm flex items-center justify-center space-x-2">
+                         <i class="fa-brands fa-whatsapp text-lg"></i>
+                         <span>Confirmer à Gaëtan sur WhatsApp</span>
+                    </a>
+
+                    <!-- 📅 Option Google Agenda -->
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Escapade+en+amoureux+avec+Ga%C3%ABtan+%F0%9F%92%96&dates=20261018/20261020&details=Petite+escapade+en+amoureux+rien+que+pour+nous+deux+%E2%9C%A8"
+                         target="_blank" rel="noopener noreferrer"
+                         class="w-full py-3.5 px-4 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-md shadow-rose-200 transition text-sm flex items-center justify-center space-x-2">
+                         <i class="fa-brands fa-google text-base"></i>
+                         <span>Ajouter sur Google Agenda</span>
+                    </a>
+               </div>
+
+               <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+                    <button onclick="restartExperience(); closeCalendarModal();"
+                         class="text-rose-500 hover:text-rose-600 font-medium py-1">
+                         <i class="fa-solid fa-rotate-right mr-1"></i>Revoir l'invitation
+                    </button>
+                    <button onclick="closeCalendarModal()" class="text-slate-400 hover:text-slate-600 font-medium py-1">
+                         Fermer
+                    </button>
+               </div>
+          </div>
+     </div>
+
+     <script>
+          const chatMessages = document.getElementById('chat-messages');
+          const actionContainer = document.getElementById('action-container');
+          const typingIndicator = document.getElementById('typing-indicator');
+
+          let reluctanceCount = 0;
+          let hasOpenedEnvelope = false;
+
+          // 💌 Configuration EmailJS pour les confirmations automatiques
+          const EMAILJS_SERVICE_ID = 'service_a2r50mp';
+          const EMAILJS_TEMPLATE_REBECCA = 'template_vk74lld';
+          const EMAILJS_TEMPLATE_GAETAN = 'template_60nponr';
+          const EMAILJS_PUBLIC_KEY = 'HWdL3yFyTjPu-eEi6';
+
+          let confirmationEmailsSent = false;
+
+          function sendConfirmationEmails() {
+               if (confirmationEmailsSent) return;
+               confirmationEmailsSent = true;
+
+               if (!window.emailjs || !EMAILJS_PUBLIC_KEY || EMAILJS_PUBLIC_KEY.includes('REMPLACER')) {
+                    console.log('EmailJS : En attente de votre Public Key pour activer l\'envoi.');
+                    return;
+               }
+
+               try {
+                    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+                    const templateParams = {
+                         guest_name: 'Rebecca',
+                         status: 'Confirmée avec amour 🥰',
+                         dates: '18 - 19 Octobre 2026'
+                    };
+
+                    // Envoi pour Gaëtan
+                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_GAETAN, templateParams)
+                         .then(() => console.log('✅ Notification envoyée à Gaëtan'))
+                         .catch(err => console.error('Erreur email Gaëtan:', err));
+
+                    // Envoi pour Rebecca
+                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_REBECCA, templateParams)
+                         .then(() => console.log('✅ Notification envoyée à Rebecca'))
+                         .catch(err => console.error('Erreur email Rebecca:', err));
+
+               } catch (error) {
+                    console.error('Erreur EmailJS:', error);
+               }
+          }
+
+          // Première étape : premier message avec bouton "Continuer la suite"
+          const scriptSteps = [
+               {
+                    sender: 'cheri',
+                    text: "Coucou mon cœur ! J'ai préparé une petite escapade en amoureux rien que pour nous deux <strong>ce week-end</strong>.",
+                    delay: 600,
+                    options: [
+                         { text: 'Continuer la suite <i class="fa-solid fa-arrow-right text-xs ml-1.5"></i>', action: "continue_step1" }
+                    ]
+               }
+          ];
+
+          const reluctanceMessages = [
+               {
+                    cheri: "Comment ça « tu vas voir » ? 😱 Tu ne vas quand même pas refuser l'invitation de ton homme ? 😉",
+                    options: [
+                         { text: "Bon d'accord, j'accepte ! 🥰", action: "accept" },
+                         { text: "Hmm, je ne sais pas trop encore... 🙈", action: "reluctance" }
+                    ]
+               },
+               {
+                    cheri: "Allons, un petit effort pour ton chéri ! ... 🌹",
+                    options: [
+                         { text: "C'est bon tu as gagné, j'accepte ! 💖", action: "accept" },
+                         { text: "Laisse-moi réfléchir encore un tout petit peu... 🤭", action: "reluctance" }
+                    ]
+               },
+               {
+                    cheri: "Ah non non non ! Pas de quartier ! Ton cœur a déjà dit oui au fond de toi, avoue-le ! 🙈💘",
+                    options: [
+                         { text: "Oui oui oui, je viens avec toi ! 🎉", action: "accept" },
+                         { text: "Tu es trop insistant ! (Mais ok j'accepte) 🥰", action: "accept" }
+                    ]
+               }
+          ];
+
+          function getCurrentTime() {
+               const now = new Date();
+               return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+          }
+
+          function scrollToBottom() {
+               chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+
+          function appendMessage(sender, text) {
+               const isCheri = sender === 'cheri';
+               const messageDiv = document.createElement('div');
+               messageDiv.className = `flex ${isCheri ? 'justify-start' : 'justify-end'} mb-3 sm:mb-4 message-bubble`;
+
+               messageDiv.innerHTML = `
+                <div class="max-w-[85%] sm:max-w-[78%] ${isCheri ? 'bg-white/95 text-slate-800 border border-rose-100 rounded-2xl sm:rounded-3xl rounded-bl-sm shadow-md' : 'bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-2xl sm:rounded-3xl rounded-br-sm shadow-lg shadow-rose-300'} p-3.5 sm:p-4 text-sm sm:text-base">
+                    ${isCheri ? `<div class="text-[11px] font-bold text-rose-500 mb-1 tracking-wide uppercase">Gaëtan</div>` : ''}
+                    <p class="leading-relaxed whitespace-pre-line">${text}</p>
+                    <div class="text-[10px] ${isCheri ? 'text-slate-400' : 'text-rose-100'} text-right mt-1.5">${getCurrentTime()}</div>
+                </div>
+            `;
+               chatMessages.appendChild(messageDiv);
+               scrollToBottom();
+          }
+
+          function showTypingThenRun(callback, delay = 900) {
+               typingIndicator.classList.remove('hidden');
+               scrollToBottom();
+               setTimeout(() => {
+                    typingIndicator.classList.add('hidden');
+                    callback();
+               }, delay);
+          }
+
+          function playScriptStep(index) {
+               if (index < scriptSteps.length) {
+                    const step = scriptSteps[index];
+                    showTypingThenRun(() => {
+                         appendMessage(step.sender, step.text);
+                         if (step.options) {
+                              renderOptions(step.options);
+                         } else {
+                              playScriptStep(index + 1);
+                         }
+                    }, step.delay);
+               }
+          }
+
+          function renderOptions(options) {
+               actionContainer.innerHTML = '';
+               const wrapper = document.createElement('div');
+               // Sur mobile : empilés proprement pour les pouces ; sur tablette/desktop : côte à côte si possible
+               wrapper.className = 'flex flex-col sm:flex-row gap-2.5 sm:gap-3';
+
+               options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    const isAcceptOrContinue = opt.action === 'accept' || opt.action === 'continue_step1';
+                    btn.className = isAcceptOrContinue
+                         ? 'flex-1 py-3.5 px-4 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-lg shadow-rose-300 transition text-sm sm:text-base flex items-center justify-center space-x-2'
+                         : 'flex-1 py-3.5 px-4 bg-white/95 hover:bg-rose-50 active:scale-[0.98] text-rose-700 font-medium rounded-2xl border border-rose-200 transition text-sm sm:text-base flex items-center justify-center shadow-sm';
+
+                    btn.innerHTML = opt.text;
+                    btn.onclick = () => handleChoice(opt.action, opt.text);
+                    wrapper.appendChild(btn);
+               });
+
+               actionContainer.appendChild(wrapper);
+               scrollToBottom();
+          }
+
+          function handleChoice(action, chosenText) {
+               actionContainer.innerHTML = ''; // Nettoyer immédiatement les boutons
+
+               if (action === 'continue_step1') {
+                    // L'utilisatrice clique sur "Continuer la suite"
+                    appendMessage('user', 'Continuer la suite <i class="fa-solid fa-arrow-right text-xs ml-1"></i>');
+
+                    showTypingThenRun(() => {
+                         // Deuxième message : demande exceptionnelle pour poser le lundi
+                         appendMessage('cheri', "Je m'occupe de tout pour dimanche, mais j'ai une demande exceptionnelle à te faire : est-ce que tu pourrais poser ton lundi pour prolonger le bonheur ? 🥰");
+
+                         // Puis enchaînement direct vers la question d'invitation avec les boutons de réponse
+                         showTypingThenRun(() => {
+                              appendMessage('cheri', "Dis-moi, es-tu prête à m'accompagner dans cette aventure ? ");
+                              renderOptions([
+                                   { text: "Oui, je le veux ! 💖", action: "accept" },
+                                   { text: "Je vais voir mes programmes / Je verrai... 🤔", action: "reluctance" }
+                              ]);
+                         }, 1200);
+                    }, 1000);
+                    return;
+               }
+
+               if (action === 'accept') {
+                    sendConfirmationEmails();
+                    appendMessage('user', chosenText || 'Oui, je le veux ! 💖');
+
+                    showTypingThenRun(() => {
+                         appendMessage('cheri', "Yaaay ! 🎉❤️ Je savais que tu dirais oui ! Prépare ton plus beau sourire, je m'occupe de tout le reste.");
+
+                         showTypingThenRun(() => {
+                              appendMessage('cheri', "À très vite alors ! Et merci du fond du cœur d'avoir accepté l'invitation de ton humble chéri ! Je t'aime fort ! 🥰✨");
+                              triggerCelebration();
+                         }, 1000);
+                    }, 1200);
+
+               } else if (action === 'reluctance') {
+                    appendMessage('user', chosenText || 'Je vais voir mes programmes / Je verrai... 🤔');
+
+                    const currentReluctance = reluctanceMessages[Math.min(reluctanceCount, reluctanceMessages.length - 1)];
+                    reluctanceCount++;
+
+                    showTypingThenRun(() => {
+                         appendMessage('cheri', currentReluctance.cheri);
+                         renderOptions(currentReluctance.options);
+                    }, 1300);
+               }
+          }
+
+          function triggerCelebration() {
+               const container = document.getElementById('particles-container');
+               for (let i = 0; i < 30; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart text-2xl sm:text-3xl';
+                    heart.innerHTML = ['💖', '✨', '🌹', '❤️', '🥰', '🎉'][Math.floor(Math.random() * 6)];
+                    heart.style.left = `${Math.random() * 92 + 4}%`;
+                    heart.style.bottom = `${Math.random() * 25}px`;
+                    heart.style.animationDuration = `${2 + Math.random() * 2}s`;
+                    heart.style.animationDelay = `${Math.random() * 0.6}s`;
+                    container.appendChild(heart);
+
+                    setTimeout(() => {
+                         heart.remove();
+                    }, 4000);
+               }
+
+               // Ouverture automatique du pop-up après acceptation
+               setTimeout(() => {
+                    openCalendarModal();
+
+                    // Option discrète au bas de la discussion si elle ferme le pop-up
+                    actionContainer.innerHTML = `
+                    <div class="text-center py-1">
+                        <button onclick="openCalendarModal()" class="text-xs text-rose-500 font-semibold hover:text-rose-600 transition flex items-center justify-center mx-auto space-x-1.5">
+                            <i class="fa-regular fa-calendar-check"></i>
+                            <span>Rouvrir l'agenda de l'escapade (18 - 19 Oct.)</span>
+                        </button>
+                    </div>
+                `;
+                    scrollToBottom();
+               }, 1400);
+          }
+
+          // 💌 Gestion de l'Enveloppe d'ouverture
+          function openEnvelope() {
+               const overlay = document.getElementById('envelope-overlay');
+               if (!overlay) return;
+               overlay.classList.add('opacity-0', 'pointer-events-none');
+               hasOpenedEnvelope = true;
+               setTimeout(() => {
+                    overlay.style.display = 'none';
+                    playScriptStep(0);
+               }, 600);
+          }
+
+          // ⏳ Compte à rebours dynamique vers le 18 Octobre 2026 à 09:00:00
+          const targetDate = new Date('2026-10-18T09:00:00');
+
+          function updateCountdown() {
+               const now = new Date();
+               const diff = targetDate - now;
+
+               const dEl = document.getElementById('countdown-days');
+               const hEl = document.getElementById('countdown-hours');
+               const mEl = document.getElementById('countdown-mins');
+               const sEl = document.getElementById('countdown-secs');
+
+               if (diff <= 0) {
+                    if (dEl) dEl.innerText = '0';
+                    if (hEl) hEl.innerText = '00';
+                    if (mEl) mEl.innerText = '00';
+                    if (sEl) sEl.innerText = '00';
+                    return;
+               }
+
+               const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+               const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+               const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+               const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+               if (dEl) dEl.innerText = days;
+               if (hEl) hEl.innerText = hours.toString().padStart(2, '0');
+               if (mEl) mEl.innerText = mins.toString().padStart(2, '0');
+               if (sEl) sEl.innerText = secs.toString().padStart(2, '0');
+          }
+
+          setInterval(updateCountdown, 1000);
+          updateCountdown();
+
+          // Gestion du pop-up d'Agenda
+          function openCalendarModal() {
+               const modal = document.getElementById('calendar-modal');
+               const content = document.getElementById('calendar-modal-content');
+               updateCountdown();
+               modal.classList.remove('hidden');
+               setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.remove('scale-95');
+                    content.classList.add('scale-100');
+               }, 10);
+          }
+
+          function closeCalendarModal() {
+               const modal = document.getElementById('calendar-modal');
+               const content = document.getElementById('calendar-modal-content');
+               modal.classList.add('opacity-0');
+               content.classList.remove('scale-100');
+               content.classList.add('scale-95');
+               setTimeout(() => {
+                    modal.classList.add('hidden');
+               }, 300);
+          }
+
+          // Gestion du modal Quitter
+          function handleQuit() {
+               const modal = document.getElementById('quit-modal');
+               const content = document.getElementById('quit-modal-content');
+               modal.classList.remove('hidden');
+               setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    content.classList.remove('scale-95');
+                    content.classList.add('scale-100');
+               }, 10);
+          }
+
+          function closeQuitModal() {
+               const modal = document.getElementById('quit-modal');
+               const content = document.getElementById('quit-modal-content');
+               modal.classList.add('opacity-0');
+               content.classList.remove('scale-100');
+               content.classList.add('scale-95');
+               setTimeout(() => {
+                    modal.classList.add('hidden');
+               }, 300);
+          }
+
+          // Téléchargement du fichier de calendrier (.ics) pour iPhone, Android, Outlook, etc. (sans lieu)
+          function downloadCalendarICS() {
+               const icsContent = [
+                    'BEGIN:VCALENDAR',
+                    'VERSION:2.0',
+                    'PRODID:-//Escapade Romantique Gaetan//FR',
+                    'CALSCALE:GREGORIAN',
+                    'METHOD:PUBLISH',
+                    'BEGIN:VEVENT',
+                    'UID:' + Date.now() + '@escapade-gaetan',
+                    'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
+                    'DTSTART;VALUE=DATE:20261018',
+                    'DTEND;VALUE=DATE:20261020',
+                    'SUMMARY:Escapade en amoureux avec Gaëtan',
+                    'DESCRIPTION:Petite escapade en amoureux rien que pour nous deux ! Préparée avec amour par Gaëtan 🥰🌴',
+                    'STATUS:CONFIRMED',
+                    'END:VEVENT',
+                    'END:VCALENDAR'
+               ].join('\r\n');
+
+               const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+               const link = document.createElement('a');
+               link.href = window.URL.createObjectURL(blob);
+               link.setAttribute('download', 'Escapade_Gaetan.ics');
+               document.body.appendChild(link);
+               link.click();
+               document.body.removeChild(link);
+          }
+
+          function restartExperience() {
+               chatMessages.innerHTML = `
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+                    <i class="fa-solid fa-heart text-9xl text-rose-600"></i>
+                </div>
+            `;
+               actionContainer.innerHTML = '';
+               reluctanceCount = 0;
+               playScriptStep(0);
+          }
+
+          // Diaporama d'arrière-plan avec fondu enchaîné doux
+          const bgSlides = document.querySelectorAll('.bg-slide');
+          let currentSlideIndex = 0;
+
+          function switchBackgroundSlide() {
+               if (bgSlides.length < 2) return;
+               bgSlides[currentSlideIndex].classList.remove('active');
+               currentSlideIndex = (currentSlideIndex + 1) % bgSlides.length;
+               bgSlides[currentSlideIndex].classList.add('active');
+          }
+
+          // Alternance toutes les 6 secondes
+          setInterval(switchBackgroundSlide, 6000);
+     </script>
+</body>
+
+</html>
