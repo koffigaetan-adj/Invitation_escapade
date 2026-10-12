@@ -393,12 +393,12 @@
                     };
 
                     // Envoi pour Gaëtan
-                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_GAETAN, templateParams)
+                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_GAETAN, templateParams, EMAILJS_PUBLIC_KEY)
                          .then(() => console.log('✅ Notification envoyée à Gaëtan'))
                          .catch(err => console.error('Erreur email Gaëtan:', err));
 
                     // Envoi pour Rebecca
-                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_REBECCA, templateParams)
+                    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_REBECCA, templateParams, EMAILJS_PUBLIC_KEY)
                          .then(() => console.log('✅ Notification envoyée à Rebecca'))
                          .catch(err => console.error('Erreur email Rebecca:', err));
 
