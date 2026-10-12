@@ -248,7 +248,7 @@
                          <!-- Cachet de cire romantique -->
                          <div
                               class="w-16 h-16 rounded-full bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-rose-500/40 border-2 border-rose-200 z-10 pulse-seal">
-                              💌
+                              <i class="fa-solid fa-heart text-2xl text-white"></i>
                          </div>
 
                          <p class="text-xs font-bold text-rose-700 tracking-widest uppercase mt-3 z-10">Pour mon amour
@@ -265,8 +265,8 @@
           <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl border border-rose-100 transform scale-95 transition-transform duration-300"
                id="quit-modal-content">
                <div
-                    class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl shadow-inner">
-                    🙈
+                    class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+                    <i class="fa-solid fa-face-smile-wink text-2xl text-rose-500"></i>
                </div>
                <h3 class="text-lg font-bold text-slate-800 mb-2">Où penses-tu aller comme ça ? 🥺</h3>
                <p class="text-sm text-slate-600 mb-6 leading-relaxed">
@@ -276,7 +276,7 @@
                <button onclick="closeQuitModal()"
                     class="w-full py-3.5 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-lg shadow-rose-300 transition text-sm sm:text-base flex items-center justify-center space-x-2">
                     <span>Retourner auprès de Gaëtan</span>
-                    <span>🥰</span>
+                    <i class="fa-solid fa-heart text-xs text-white ml-1"></i>
                </button>
           </div>
      </div>
@@ -287,13 +287,13 @@
           <div class="bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-6 max-w-sm w-full text-center shadow-2xl border border-rose-100 transform scale-95 transition-transform duration-300 max-h-[92vh] overflow-y-auto"
                id="calendar-modal-content">
                <div
-                    class="w-14 h-14 bg-gradient-to-tr from-rose-100 to-pink-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-2 text-2xl shadow-inner">
-                    🎉
+                    class="w-14 h-14 bg-gradient-to-tr from-rose-100 to-pink-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-2 text-xl shadow-inner">
+                    <i class="fa-solid fa-champagne-glasses text-rose-500 text-xl"></i>
                </div>
                <h3 class="text-lg sm:text-xl font-bold text-slate-800 mb-1">C'est officiel mon cœur ! 💖</h3>
                <div
                     class="inline-block bg-rose-50 text-rose-600 text-xs font-bold px-3 py-1 rounded-full mb-3 border border-rose-200">
-                    Dimanche 18 & Lundi 19 Octobre
+                    Samedi 17 & Dimanche 18 Octobre
                </div>
 
                <!-- ⏳ Compte à rebours amoureux -->
@@ -324,13 +324,45 @@
                     </div>
                </div>
 
+               <!-- 🌸 Détails & Itinéraire avec vraies icônes vectorielles -->
+               <div class="bg-rose-50/70 p-3.5 rounded-2xl border border-rose-100 text-left mb-4 space-y-2">
+                    <div class="flex items-center space-x-2.5 text-xs sm:text-sm text-slate-700">
+                         <div class="w-6 h-6 rounded-full bg-white shadow-sm text-rose-500 flex items-center justify-center shrink-0 border border-rose-100">
+                              <i class="fa-solid fa-calendar-days text-[11px]"></i>
+                         </div>
+                         <span><strong>Dates :</strong> Samedi 17 — Dimanche 18 Octobre</span>
+                    </div>
+                    <div class="flex items-center space-x-2.5 text-xs sm:text-sm text-slate-700">
+                         <div class="w-6 h-6 rounded-full bg-white shadow-sm text-rose-500 flex items-center justify-center shrink-0 border border-rose-100">
+                              <i class="fa-solid fa-clock text-[11px]"></i>
+                         </div>
+                         <span><strong>Départ :</strong> Samedi à 07h50 de la maison</span>
+                    </div>
+                    <div class="flex items-center space-x-2.5 text-xs sm:text-sm text-slate-700">
+                         <div class="w-6 h-6 rounded-full bg-white shadow-sm text-rose-500 flex items-center justify-center shrink-0 border border-rose-100">
+                              <i class="fa-solid fa-map-location-dot text-[11px]"></i>
+                         </div>
+                         <a href="https://maps.app.goo.gl/bpoacFEQANDYLpBFA" target="_blank" rel="noopener noreferrer"
+                              class="text-rose-600 hover:text-rose-800 font-semibold underline decoration-rose-300 inline-flex items-center space-x-1">
+                              <span>Voir l'itinéraire sur Maps</span>
+                              <i class="fa-solid fa-arrow-up-right-from-square text-[9px] ml-0.5"></i>
+                         </a>
+                    </div>
+                    <div class="flex items-center space-x-2.5 text-xs sm:text-sm text-slate-700">
+                         <div class="w-6 h-6 rounded-full bg-white shadow-sm text-rose-500 flex items-center justify-center shrink-0 border border-rose-100">
+                              <i class="fa-solid fa-wand-magic-sparkles text-[11px]"></i>
+                         </div>
+                         <span class="text-slate-600">Complicité, rires & beaux souvenirs</span>
+                    </div>
+               </div>
+
                <p class="text-xs sm:text-sm text-slate-600 mb-4 leading-relaxed">
                     Prépare ton plus beau sourire, je m'occupe de tout le reste !
                </p>
 
                <div class="space-y-3 mb-4">
                     <!-- 💬 Option WhatsApp vers Gaëtan -->
-                    <a href="https://wa.me/33749297869?text=Mon%20ch%C3%A9ri%2C%20j'ai%20dit%20OUI%20!%20%F0%9F%92%96%20J'ai%20trop%20h%C3%A2te%20qu'on%20parte%20ce%20week-end%20du%2018%20octobre%20!%20%F0%9F%A5%B0%E2%9C%88%EF%B8%8F"
+                    <a href="https://wa.me/33749297869?text=Mon%20ch%C3%A9ri%2C%20j'ai%20dit%20OUI%20!%20%F0%9F%92%96%20J'ai%20trop%20h%C3%A2te%20qu'on%20parte%20ce%20week-end%20du%2017%20octobre%20!%20%F0%9F%A5%B0"
                          target="_blank" rel="noopener noreferrer"
                          class="w-full py-3.5 px-4 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-md shadow-emerald-200 transition text-sm flex items-center justify-center space-x-2">
                          <i class="fa-brands fa-whatsapp text-lg"></i>
@@ -338,7 +370,7 @@
                     </a>
 
                     <!-- 📅 Option Google Agenda -->
-                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Escapade+en+amoureux+avec+Ga%C3%ABtan+%F0%9F%92%96&dates=20261018/20261020&details=Petite+escapade+en+amoureux+rien+que+pour+nous+deux+%E2%9C%A8"
+                    <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Escapade+en+amoureux+avec+Ga%C3%ABtan+%F0%9F%92%96&dates=20261017T075000/20261018T200000&details=Petite+escapade+en+amoureux+rien+que+pour+nous+deux+%21+D%C3%A9part+07h50+de+la+maison+%E2%9C%A8&location=https%3A%2F%2Fmaps.app.goo.gl%2FbpoacFEQANDYLpBFA"
                          target="_blank" rel="noopener noreferrer"
                          class="w-full py-3.5 px-4 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 active:scale-[0.98] text-white font-semibold rounded-2xl shadow-md shadow-rose-200 transition text-sm flex items-center justify-center space-x-2">
                          <i class="fa-brands fa-google text-base"></i>
@@ -389,7 +421,7 @@
                     const templateParams = {
                          guest_name: 'Rebecca',
                          status: 'Confirmée avec amour 🥰',
-                         dates: '18 - 19 Octobre 2026'
+                         dates: '17 - 18 Octobre 2026'
                     };
 
                     // Envoi pour Gaëtan
@@ -423,22 +455,22 @@
                {
                     cheri: "Comment ça « tu vas voir » ? 😱 Tu ne vas quand même pas refuser l'invitation de ton homme ? 😉",
                     options: [
-                         { text: "Bon d'accord, j'accepte ! 🥰", action: "accept" },
-                         { text: "Hmm, je ne sais pas trop encore... 🙈", action: "reluctance" }
+                         { text: 'Bon d\'accord, j\'accepte ! <i class="fa-solid fa-heart text-xs ml-1.5"></i>', action: "accept" },
+                         { text: 'Hmm, je ne sais pas trop encore... <i class="fa-solid fa-question text-xs ml-1.5"></i>', action: "reluctance" }
                     ]
                },
                {
                     cheri: "Allons, un petit effort pour ton chéri ! ... 🌹",
                     options: [
-                         { text: "C'est bon tu as gagné, j'accepte ! 💖", action: "accept" },
-                         { text: "Laisse-moi réfléchir encore un tout petit peu... 🤭", action: "reluctance" }
+                         { text: 'C\'est bon tu as gagné, j\'accepte ! <i class="fa-solid fa-heart text-xs ml-1.5"></i>', action: "accept" },
+                         { text: 'Laisse-moi réfléchir encore un peu... <i class="fa-solid fa-hourglass-half text-xs ml-1.5"></i>', action: "reluctance" }
                     ]
                },
                {
                     cheri: "Ah non non non ! Pas de quartier ! Ton cœur a déjà dit oui au fond de toi, avoue-le ! 🙈💘",
                     options: [
-                         { text: "Oui oui oui, je viens avec toi ! 🎉", action: "accept" },
-                         { text: "Tu es trop insistant ! (Mais ok j'accepte) 🥰", action: "accept" }
+                         { text: 'Oui oui oui, je viens avec toi ! <i class="fa-solid fa-champagne-glasses text-xs ml-1.5"></i>', action: "accept" },
+                         { text: 'Tu es trop insistant ! (Mais j\'accepte) <i class="fa-solid fa-heart text-xs ml-1.5"></i>', action: "accept" }
                     ]
                }
           ];
@@ -522,14 +554,14 @@
 
                     showTypingThenRun(() => {
                          // Deuxième message : demande exceptionnelle pour poser le lundi
-                         appendMessage('cheri', "Je m'occupe de tout pour dimanche, mais j'ai une demande exceptionnelle à te faire : est-ce que tu pourrais poser ton lundi pour prolonger le bonheur ? 🥰");
+                         appendMessage('cheri', "Je m'occupe d'absolument tout du samedi 17 au dimanche 18 octobre pour nous deux ! 🥰✨");
 
                          // Puis enchaînement direct vers la question d'invitation avec les boutons de réponse
                          showTypingThenRun(() => {
                               appendMessage('cheri', "Dis-moi, es-tu prête à m'accompagner dans cette aventure ? ");
                               renderOptions([
-                                   { text: "Oui, je le veux ! 💖", action: "accept" },
-                                   { text: "Je vais voir mes programmes / Je verrai... 🤔", action: "reluctance" }
+                                   { text: 'Oui, je le veux ! <i class="fa-solid fa-heart text-xs ml-1.5"></i>', action: "accept" },
+                                   { text: 'Je vais voir mes programmes... <i class="fa-solid fa-calendar-check text-xs ml-1.5"></i>', action: "reluctance" }
                               ]);
                          }, 1200);
                     }, 1000);
@@ -609,7 +641,7 @@
           }
 
           // ⏳ Compte à rebours dynamique vers le 18 Octobre 2026 à 09:00:00
-          const targetDate = new Date('2026-10-18T09:00:00');
+          const targetDate = new Date('2026-10-17T07:50:00');
 
           function updateCountdown() {
                const now = new Date();
@@ -700,8 +732,8 @@
                     'BEGIN:VEVENT',
                     'UID:' + Date.now() + '@escapade-gaetan',
                     'DTSTAMP:' + new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z',
-                    'DTSTART;VALUE=DATE:20261018',
-                    'DTEND;VALUE=DATE:20261020',
+                    'DTSTART;VALUE=DATE:20261017',
+                    'DTEND;VALUE=DATE:20261019',
                     'SUMMARY:Escapade en amoureux avec Gaëtan',
                     'DESCRIPTION:Petite escapade en amoureux rien que pour nous deux ! Préparée avec amour par Gaëtan 🥰🌴',
                     'STATUS:CONFIRMED',
